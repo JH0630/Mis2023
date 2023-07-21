@@ -49,7 +49,7 @@ public class ProductController {
 		
 		logger.info("removePage post...");
 		// 삭제할 수 있으려면, 로그인한 정보와 글의 작성자의 정보가 동일 할 때만 삭제 됨
-
+ 
 		// 1) 로그인 정보 가져오기
 		UserVO user = (UserVO) session.getAttribute("login");
 
