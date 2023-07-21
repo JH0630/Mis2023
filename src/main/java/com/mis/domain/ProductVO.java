@@ -1,31 +1,77 @@
 package com.mis.domain;
 
+import java.util.Date;
+
 public class ProductVO {
 
-	private String name;
-	private double price;
+	private int pno;
+	private String pname;
+	private int price;
+	private String content;
+	private String writer;
+	private Date regdate;
+	private int viewcnt;
 
-	 // 게터와 세터는 mabatis가 접근하기 위해 private으로 선언해준 컬럼들을 불러오고 설정
-	public String getName() {
-		return name;
+	public int getPno() {
+		return pno;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setPno(int pno) {
+		this.pno = pno;
 	}
 
-	public double getPrice() {
+	public String getPname() {
+		return pname;
+	}
+
+	public void setPname(String pname) {
+		this.pname = pname;
+	}
+
+	public int getPrice() {
 		return price;
 	}
 
-	public void setPrice(double price) {
+	public void setPrice(int price) {
 		this.price = price;
 	}
-	
-	//toString을 안하면 메모리값을 가져오기 때문에 선언해줌
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public String getWriter() {
+		return writer;
+	}
+
+	public void setWriter(String writer) {
+		this.writer = writer;
+	}
+
+	public Date getRegdate() {
+		return regdate;
+	}
+
+	public void setRegdate(Date regdate) {
+		this.regdate = regdate;
+	}
+
+	public int getViewcnt() {
+		return viewcnt;
+	}
+
+	public void setViewcnt(int viewcnt) {
+		this.viewcnt = viewcnt;
+	}
+
 	@Override
 	public String toString() {
-		return "ProductVO [name=" + name + ", price=" + price + "]";
+		return "ProductVO [pno=" + pno + ", pname=" + pname + ", price=" + price + ", content=" + content + ", writer="
+				+ writer + ", regdate=" + regdate + ", viewcnt=" + viewcnt + "]";
 	}
 
 }
