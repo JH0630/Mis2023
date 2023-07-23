@@ -5,8 +5,69 @@
 <mapper namespace="com.mis.mapper.UserMapper">
 
 	<select id="login" resultType="com.mis.domain.UserVO">
-		SELECT USID, UPW, UNAME, UPOINT FROM TBL_USER
+		SELECT USID, UPW, UNAME, UPOINT
+		FROM TBL_USER
 		WHERE USID = #{usid} AND UPW = #{upw}
 	</select>
 
+	<insert id="create">
+		INSERT INTO TBL_USER (USID, UPW, UNAME)
+		VALUES (#{usid},#{upw},#{uname})
+	</insert>
+
+	<select id="read" resultType="com.mis.domain.UserVO">
+		SELECT * FROM TBL_USER
+		WHERE USID = #{usid}
+	</select>
+
+	<update id="update">
+		UPDATE TBL_USER SET UPW = #{upw}, UNAME =
+		#{uname},
+		UPOINT = #{upoint}
+		WHERE usid = #{usid}
+	</update>
+
+	<delete id="delete">
+		DELETE FROM TBL_USER WHERE usid = #{usid}
+	</delete>
+
+	<sql id="search">
+		<if test="searchType != null">
+			<if test="searchType == 'i'.toString()">
+				AND USID LIKE '%' || #{keyword} || '%'
+			</if>
+			<if test="searchType == 'n'.toString()">
+				AND UNAME LIKE '%' || #{keyword} || '%'
+			</if>
+			<if test="searchType == 'in'.toString()">
+				AND (USID LIKE '%' || #{keyword} || '%')
+				OR
+				(UNAME LIKE '%'
+				|| #{keyword} || '%')
+			</if>
+		</if>
+	</sql>
+
+	<select id="listSearch"
+		resultType="com.mis.domain.UserVO">
+		<![CDATA[
+			SELECT * FROM (
+				SELECT ROWNUM RNUM, USID, UPW, UNAME, UPOINT
+					FROM (SELECT ROWNUM RNUM, USID, UPW, UNAME, UPOINT FROM TBL_USER WHERE 1=1
+		]]>
+		<include refid="search"></include>
+		<![CDATA[
+		ORDER BY RNUM DESC))
+			WHERE (RNUM >= #{pageStart} AND RNUM <= #{pageEnd})
+			ORDER BY RNUM DESC
+		]]>
+	</select>
+
+	<select id="listSearchCount" resultType="int">
+		<![CDATA[
+			SELECT COUNT(*) FROM TBL_USER
+			WHERE 1=1
+		]]>
+		<include refid="search"></include>
+	</select>
 </mapper>

@@ -18,39 +18,14 @@
 	</select>
 
 	<update id="update">
-		UPDATE TBL_PRODUCT SET PNAME = #{pname}, PRICE =
-		#{price}, CONTENT=#{content},WRITER = #{writer}
+		UPDATE TBL_PRODUCT SET PNAME=#{pname}, 
+		PRICE = #{price}, CONTENT=#{content}, WRITER = #{writer}
 		WHERE PNO = #{pno}
 	</update>
 
 	<delete id="delete">
 		DELETE FROM TBL_PRODUCT WHERE pNO = #{pno}
 	</delete>
-
-	<select id="listAll" resultType="com.mis.domain.ProductVO">
-	<![CDATA[
-		SELECT PNO, PNAME, PRICE, CONTENT, WRITER, REGDATE, VIEWCNT
-			FROM TBL_PRODUCT
-			WHERE PNO > 0
-			ORDER BY PNO DESC
-			]]>
-	</select>
-
-	<select id="listCountCriteria" resultType="int">
-		SELECT COUNT(*) FROM
-		TBL_PRODUCT
-	</select>
-
-	<select id="listCriteria" resultType="com.mis.domain.ProductVO">
-	<![CDATA[
-		SELECT * FROM (
-			SELECT ROWNUM RNUM, PNO, PNAME, PRICE, CONTENT, WRITER, REGDATE, VIEWCNT
-				FROM (SELECT * FROM TBL_PRODUCT ORDER BY PNO DESC)
-				)
-		WHERE (RNUM >= #{pageStart} AND RNUM <= #{pageEnd})
-		ORDER BY PNO DESC, REGDATE DESC
-			]]>
-	</select>
 
 	<sql id="search">
 		<if test="searchType != null">
@@ -86,7 +61,7 @@
 		</if>
 	</sql>
 
-	<select id="listSearchCriteria"
+	<select id="listSearch"
 		resultType="com.mis.domain.ProductVO">
 		<![CDATA[
 			SELECT * FROM (
@@ -101,7 +76,7 @@
 		]]>
 	</select>
 
-	<select id="listSearchCountCriteria" resultType="int">
+	<select id="listSearchCount" resultType="int">
 		<![CDATA[
 			SELECT COUNT(*) FROM TBL_PRODUCT 
 			WHERE PNO > 0

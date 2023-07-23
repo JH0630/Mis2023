@@ -44,7 +44,7 @@ public class ProductController {
 	}
 
 	@RequestMapping(value = "/removePage", method = RequestMethod.POST)
-	public String remove(int pno, HttpSession session, @ModelAttribute("cri") SearchCriteria cri, Model model,
+	public String remove(@RequestParam("pno") int pno, HttpSession session, @ModelAttribute("cri") SearchCriteria cri, Model model,
 			RedirectAttributes rttr) throws Exception {
 		
 		logger.info("removePage post...");
@@ -69,7 +69,7 @@ public class ProductController {
 			rttr.addAttribute("perPageNum", cri.getPerPageNum());
 			rttr.addAttribute("searchType", cri.getSearchType());
 			rttr.addAttribute("keyword", cri.getKeyword());
-			rttr.addFlashAttribute("msg", "로그인 정보가 일치하지 않아 삭제 불가능합니다.");
+			rttr.addFlashAttribute("msg", "잘못된 접근입니다.");
 			return "redirect:/product/readPage";
 		}
 	}
@@ -100,7 +100,8 @@ public class ProductController {
 	}
 
 	@RequestMapping(value = "/modifyPage", method = RequestMethod.GET)
-	public String modifyPageGET(int pno, HttpSession session, @ModelAttribute("cri") SearchCriteria cri, Model model,
+	public String modifyPageGET(@RequestParam("pno") int pno, HttpSession session, 
+			@ModelAttribute("cri") SearchCriteria cri, Model model,
 			RedirectAttributes rttr) throws Exception {
 
 		logger.info("modifyPage get...");
@@ -125,7 +126,7 @@ public class ProductController {
 			rttr.addAttribute("perPageNum", cri.getPerPageNum());
 			rttr.addAttribute("searchType", cri.getSearchType());
 			rttr.addAttribute("keyword", cri.getKeyword());
-			rttr.addFlashAttribute("msg", "로그인 정보가 일치하지 않아 수정 불가능합니다.");
+			rttr.addFlashAttribute("msg", "잘못된 접근입니다.");
 			return "redirect:/product/readPage";
 		}
 	}

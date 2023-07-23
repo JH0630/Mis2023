@@ -3,6 +3,8 @@ package com.mis.controller;
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -14,9 +16,11 @@ import com.mis.dto.LoginDTO;
 import com.mis.service.UserService;
 
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/user/*")
 public class UserController {
-
+	
+	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+	
 	@Inject
 	private UserService service;
 
@@ -49,4 +53,21 @@ public class UserController {
 
 		return "redirect:/";
 	}
+	
+	@RequestMapping(value = "/register", method = RequestMethod.GET)
+	public void registerGET() throws Exception {
+		logger.info("register get...");
+	}
+
+	@RequestMapping(value = "/register", method = RequestMethod.POST)
+	public String registerPOST(UserVO vo) throws Exception {
+
+		logger.info("register post...");
+
+		// 게시글 등록
+		service.register(vo);
+
+		return "redirect:/user/login";
+	}
+
 }
